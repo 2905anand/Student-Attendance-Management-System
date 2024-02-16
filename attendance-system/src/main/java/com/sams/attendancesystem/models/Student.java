@@ -2,8 +2,8 @@ package com.sams.attendancesystem.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+// import jakarta.persistence.GeneratedValue;
+// import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -15,8 +15,8 @@ public class Student {
 
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer studentId;
+    // @GeneratedValue(strategy = GenerationType.AUTO)
+    private String studentId;
 
     @Column
     private Integer studentRollNo;
@@ -41,12 +41,12 @@ public class Student {
     @Column
     private Integer semester;
 
-    public Integer getstudentId() {
+    public String getstudentId() {
         return studentId;
     }
 
-    public void setstudentId(Integer studentId) {
-        this.studentId = studentId;
+    public void setstudentId(String studentId2) {
+        this.studentId = studentId2;
     }
 
     public Integer getstudentRollNo() {

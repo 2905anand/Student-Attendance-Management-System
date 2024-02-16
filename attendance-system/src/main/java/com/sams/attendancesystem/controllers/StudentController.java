@@ -26,9 +26,9 @@ public class StudentController {
 
     // Function to add New Students @RequestParam Integer studentId
     @PostMapping(path = "/add")
-    public String addNewStudent(@RequestParam Integer studentRollNo, @RequestParam String studentName, @RequestParam Integer batch, @RequestParam String branchId, @RequestParam Integer semester){
+    public String addNewStudent(@RequestParam String studentId, @RequestParam Integer studentRollNo, @RequestParam String studentName, @RequestParam Integer batch, @RequestParam String branchId, @RequestParam Integer semester){
         Student n=new Student();
-        // n.setstudentId(studentId);
+        n.setstudentId(studentId);
         n.setstudentRollNo(studentRollNo);
         n.setstudentName(studentName);
         n.setbatch(batch);
