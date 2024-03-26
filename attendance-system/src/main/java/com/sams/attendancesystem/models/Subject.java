@@ -1,14 +1,25 @@
 package com.sams.attendancesystem.models;
 
-import org.springframework.lang.NonNull;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
+
+// import org.springframework.lang.NonNull;
 
 // import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 // import jakarta.persistence.GeneratedValue;
 // import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 // import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -19,22 +30,37 @@ public class Subject {
     @Id
     @Column
     // @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer subjectId;
-
-
-    @Column
     private String subjectCode;
+
+
+    // @Column
+    // private String subjectCode;
 
     @Column
     private String subjectName;
 
-    public Integer getsubjectId() {
-        return subjectId;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+    @JoinTable(name = "TEACHER_SUBJECT_MAPPING", joinColumns = @JoinColumn(name = "subjectCode"),
+    inverseJoinColumns = @JoinColumn(name = "teacherId"))
+    @JsonBackReference
+    @JsonIgnore
+    private Set<Teacher> teachers;
+    // private List<Teacher> teachers;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+    @JoinTable(name = "STUDENT_SUBJECT_MAPPING", joinColumns = @JoinColumn(name = "subjectCode"),
+    inverseJoinColumns = @JoinColumn(name = "studentId"))
+    @JsonBackReference
+    @JsonIgnore
+    private Set<Student> students;
+
+    public Subject(){}
+
+    public Subject(String subjectCode, String subjectName){
+        this.subjectCode = subjectCode;
+        this.subjectName = subjectName;
     }
 
-    public void setsubjectId(Integer subjectId) {
-        this.subjectId = subjectId;
-    }
 
     public String getsubjectCode() {
         return subjectCode;
@@ -52,5 +78,23 @@ public class Subject {
     public void setsubjectName(String subjectName) {
         this.subjectName = subjectName;
     }
+
+    public Set<Teacher> getTeachers() {
+        return teachers;
+    }
+
+    public void setTeachers(Set<Teacher> teachers) {
+        this.teachers = teachers;
+    }
+
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
+    }
+
+    
 
 }

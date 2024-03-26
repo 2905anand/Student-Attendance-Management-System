@@ -9,7 +9,7 @@ import com.sams.attendancesystem.models.Subject;
 
 
 
-public interface SubjectRepository extends JpaRepository<Subject, Integer>{
+public interface SubjectRepository extends JpaRepository<Subject, String>{
     List<Subject> findBySubjectName(String subjectName);
     
 }

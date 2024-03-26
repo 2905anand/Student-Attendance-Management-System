@@ -2,6 +2,8 @@ package com.sams.attendancesystem.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -20,11 +22,15 @@ public class Branch {
     private String branchName;
 
     @OneToMany(mappedBy = "branch")
+    @JsonManagedReference
     private List<Student> students;
 
-    // public Branch(){
+    public Branch(){}
 
-    // }
+    public Branch(String branchId, String branchName) {
+        this.branchId = branchId;
+        this.branchName = branchName;
+    }
 
     public String getBranchId() {
         return branchId;
@@ -42,6 +48,15 @@ public class Branch {
         this.branchName = branchName;
     }
 
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
+    
     
 
 }

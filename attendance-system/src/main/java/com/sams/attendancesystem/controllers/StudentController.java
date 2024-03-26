@@ -1,6 +1,8 @@
 package com.sams.attendancesystem.controllers;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.http.ResponseEntity;
@@ -8,34 +10,54 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+// import org.springframework.web.bind.annotation.RequestParam;
 // import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sams.attendancesystem.Repository.StudentRepository;
+import com.sams.attendancesystem.Repository.SubjectRepository;
 import com.sams.attendancesystem.models.Student;
+import com.sams.attendancesystem.models.Subject;
 
 @RestController
-@RequestMapping(path = "/student", method = {RequestMethod.GET, RequestMethod.DELETE, RequestMethod.PUT})
+@RequestMapping(path = "/student", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 public class StudentController {
     
     @Autowired
     private StudentRepository studentRepository;
 
+    @Autowired
+    private SubjectRepository subjectRepository;
+
     // Function to add New Students @RequestParam Integer studentId
     @PostMapping(path = "/add")
-    public String addNewStudent(@RequestParam String studentId, @RequestParam Integer studentRollNo, @RequestParam String studentName, @RequestParam Integer batch, @RequestParam String branchId, @RequestParam Integer semester){
-        Student n=new Student();
-        n.setstudentId(studentId);
-        n.setstudentRollNo(studentRollNo);
-        n.setstudentName(studentName);
-        n.setbatch(batch);
-        n.setbranchId(branchId);
-        n.setsemester(semester);
-        studentRepository.save(n);
-        return "Saved";
+    public String addNewStudent(@RequestBody Student entity){
+        Student student = new Student(entity.getstudentId(), entity.getstudentRollNo(), entity.getstudentName(), entity.getbatch(), entity.getbranchId(), entity.getsemester());
+        studentRepository.save(student);
+        return "Student Saved";
+    }
+
+    @PostMapping(path = "/assignStudentToSubject/{studentId}/{subjectCode}")
+    public String assignSubjectsToStudent(@PathVariable(name = "studentId") String studentId, @PathVariable(name = "subjectCode") String subjectCode) {
+        Student student = this.studentRepository.getReferenceById(studentId);
+
+        Subject subject = this.subjectRepository.getReferenceById(subjectCode);
+
+        Set<Student> students = subject.getStudents();
+        students.add(student);
+
+        // Set<Subject> subjects = student.getSubjects();
+        // subjects.add(subject);
+
+        subject.setStudents(students);
+
+        subject = subjectRepository.save(subject);
+
+        return "Subject Assigned";
+
     }
 
     // Function to Retrieve All Subjects
@@ -61,7 +83,7 @@ public class StudentController {
 
     // Function to delete any Student using its ID
     @DeleteMapping(path="delete/{studentId}")
-    public String  deleteStudent(@PathVariable Integer studentId){
+    public String  deleteStudent(@PathVariable String studentId){
         studentRepository.deleteById(studentId);
         return "Student Deleted";
     }

@@ -8,7 +8,7 @@ import com.sams.attendancesystem.models.Teacher;
 
 
 
-public interface TeacherRepository extends JpaRepository<Teacher, Integer>{
+public interface TeacherRepository extends JpaRepository<Teacher, String>{
     
 
 
