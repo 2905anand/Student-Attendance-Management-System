@@ -1,5 +1,6 @@
 package com.sams.attendancesystem.controllers;
 
+import java.util.ArrayList;
 // import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -80,11 +81,26 @@ public class StudentController {
         return students;
     }
 
+    public Student getStudentbyId(@PathVariable String studentId){
+        List<Student> students = studentRepository.findByStudentId(studentId);
+        if(students!=null){
+            return students.get(0);
+        }
+        return null;
+    }
+
 
     // Function to delete any Student using its ID
     @DeleteMapping(path="delete/{studentId}")
     public String  deleteStudent(@PathVariable String studentId){
         studentRepository.deleteById(studentId);
         return "Student Deleted";
+    }
+
+    public List<Student> getStudentListForAttendance(String course,String branch,int semesterValue) {
+        // TODO Auto-generated method stub
+        //throw new UnsupportedOperationException("Unimplemented method 'getStudentListForAttendance'");
+        List<Student> studentList=studentRepository.findStudentforAttendance(course, branch, semesterValue);
+        return studentList;
     }
 }

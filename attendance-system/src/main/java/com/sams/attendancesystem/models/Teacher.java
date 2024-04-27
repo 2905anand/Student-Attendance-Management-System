@@ -37,6 +37,15 @@ public class Teacher {
     @Column
     private String teacherName;
 
+    @Column
+    private String password;
+
+    @Column
+    private String teacher_email;
+
+    @Column
+    private String teacher_role;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(name = "TEACHER_SUBJECT_MAPPING", joinColumns = @JoinColumn(name = "teacherId"),
     inverseJoinColumns = @JoinColumn(name = "subjectCode"))
@@ -68,6 +77,30 @@ public class Teacher {
 
     public void setteacherName(String teacherName) {
         this.teacherName = teacherName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getTeacher_email() {
+        return teacher_email;
+    }
+
+    public void setTeacher_email(String teacher_email) {
+        this.teacher_email = teacher_email;
+    }
+
+    public String getTeacher_role() {
+        return teacher_role;
+    }
+
+    public void setTeacher_role(String teacher_role) {
+        this.teacher_role = teacher_role;
     }
 
     public Set<Subject> getSubjects() {

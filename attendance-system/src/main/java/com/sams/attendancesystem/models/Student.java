@@ -26,13 +26,13 @@ public class Student {
     @Id
     @Column
     // @GeneratedValue(strategy = GenerationType.AUTO)
-    private String studentId;
+    public String studentId;
 
     @Column
-    private Integer studentRollNo;
+    public Integer studentRollNo;
 
     @Column
-    private String studentName;
+    public String studentName;
 
     @Column
     private Integer batch;

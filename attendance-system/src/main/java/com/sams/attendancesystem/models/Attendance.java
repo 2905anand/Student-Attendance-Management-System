@@ -34,6 +34,9 @@ public class Attendance {
     @Column
     private Date date;
 
+    public Attendance() {
+    }
+
     public Attendance(Long attendanceId, String studentId, String branchId, String subjectId, Integer attended, Date date){
         this.attendanceId = attendanceId;
         this.studentId = studentId;

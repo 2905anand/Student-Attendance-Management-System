@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .nav {
+            display: flex;
+            text-align: center;
+            width: 100%;
+            height: 150px;
+            background-color: rgb(64, 102, 192);
+            color: white;
+        }
+
+        .nav .logo-img {
+            margin-top: 20px;
+            height: 120px;
+            width: 175px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .nav .logo-txt {
+            font-size: 30px;
+            margin-top: 80px;
+            margin-left: 50px;
+            user-select: none;
+        }
+
+        .navbar {
+            background-color: rgb(212, 212, 212);
+            height: 35px;
+            font-size: 15px;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .navbar a{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 3px;
+            height: 28px;
+            text-decoration: none;
+            padding: 0.5rem;
+            margin-left: 20px;
+            color: black;
+            font-weight: lighter;
+            border-radius: 10px;
+            background-color: white;
+        }
+
+        .navbar a:hover{
+            color: rgb(67, 72, 216);
+            border: 1px solid black;
+        }
+
+        .navbar #logout{
+            margin-left: 700px;
+            margin-top: 3px;
+            padding: 0.5rem;
+            height: 28px;
+            border-radius: 10px;
+            border: none;
+            font-size: 15px;
+            background-color: white;
+            cursor: pointer;
+        }
+        .navbar #logout:hover {
+            background-color: rgb(234, 234, 234);
+            border: 1px solid black;
+        }
+
+        /* .navbar button i {
+            margin-left: 3px;
+        } */
+
+        .attendance-sheet {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin: 50px;
+            background-color: rgb(234, 234, 234);
+            width: 60%;
+            margin-left: 20%;
+            box-shadow: 0 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .attendance-sheet .heading {
+            height: 30px;
+            font-size: 13px;
+            background-color: white;
+            margin: 10px;
+            margin-top: 0;
+            width: 100%;
+        }
+
+        .attendance-sheet .heading h3 {
+            color: skyblue;
+            margin-left: 40px;
+            margin-top: 5px;
+        }
+
+        .attendance-sheet .tname {
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+
+        .attendance-sheet .tname p {
+            width: 40%;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+        .attendance-sheet .tname p span {
+            font-size: 14px;
+            font-weight: 100;
+            color: rgb(71, 71, 71);
+        }
+
+        .attendance-sheet .tname select {
+            height: 20px;
+            width: 80px;
+        }
+
+        table {
+            margin: 20px;
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        th,
+        td {
+            border: 0.5px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <img class="logo-img" src="/assets/STCET-Logo-1.png" alt="Logo Image">
+        <h1 class="logo-txt">St. Thomas' College of Engineering & Technology</h1>
+    </div>
+    <div class="navbar">
+        <a href="/home">Dashboard</a>
+        <a href="">Attendance</a>
+        <a href="#">Reports</a>
+        <a href="change_password">Change Password</a>
+        <a id="logout" href="/logout">Logout<i class="fa fa-sign-out"></i></a>
+    </div>
+
+    <div class="attendance-sheet">
+        <div class="heading">
+            <h3>Attendance Sheet</h3>
+        </div>
+        <div class="tname">
+            <p>Teacher Name: <span th:text="${teacher}"></span></p>
+            <p>Branch: <span th:text="${branch}"></span></p>
+            <p>Semester: <span th:text="${semester}"></span></p>
+            <p>Subject: <span th:text="${course}"></span></p>
+            <!--<p>Mark All as </p>
+            <select>
+                <option value="All">All</option>
+                <option value="None">None</option>
+
+            </select>-->
+            <p>Date: <span th:text="${date}"></span></p>
+        </div>
+        <form action="/attendance/updateAttendance">
+            <input name="branchId" type="hidden" th:value="${branch}">
+            <input name="subjectId" type="hidden" th:value="${course}">
+            <input name="semester" type="hidden" th:value="${semester}">
+            <input name="date" type="hidden" th:value="${date}">
+        <table>
+            <thead>
+                <tr>
+                    <th>Roll No.</th>
+                    <th>Student Name</th>
+                    <th>Present</th>
+                    <!--<th>Absent</th>-->
+                </tr>
+            </thead>
+            <tbody>
+                    <tr th:each="student:${studentList}">
+                        <td th:text="${student.studentRollNo}"></td>
+                        <td th:text="${student.studentName}" ></td>
+                        <td><input type="checkbox" checked name="presentstudents" th:value="${student.studentId}"></td>
+                        <!--<td><input type="radio" name="absentstudents" th:value="${student.studentId}"></td>-->
+                    </tr>
+                    <tr>
+                        <td style="border: hidden;"></td>
+                        <td style="border: hidden;"><input type="submit" value="submit" name="submit"></td>
+                        <td style="border: hidden;"></td>
+                        <!--<td style="border: hidden;"></td>-->
+
+                    </tr>
+            </tbody>
+        </table>
+    </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/reportStyle.css">
+</head>
+<body>
+    <div class="nav">
+        <img class="logo-img"  src="/assets/STCET-Logo.png" alt="Logo Image">
+        <h1 class="logo-txt">St. Thomas' College of Engineering & Technology</h1>
+    </div>
+    <div class="navbar">
+            <a href="/home">Dashboard</a>
+            <a href="/home">Attendance</a>
+            <a href="">Reports</a>
+            <a href="/home/change_password">Change Password</a>
+            <a id="logout" href="/logout">Logout<i class="fa fa-sign-out"></i></a>
+    </div>
+
+    <!-- End of Navbar -->
+
+    <div class="report-detail">
+        <div class="heading">
+            <h1>Generate Report</h1>
+        </div>
+
+        <div class="form">
+            <form action="/home/createReport">
+                <div class="form-group">
+                    <label for="semester">Semester</label>
+                    <select name="semester" id="semester">
+                        <option value="1st">1st</option>
+                        <option value="2nd">2nd</option>
+                        <option value="3rd">3rd</option>
+                        <option value="4th">4th</option>
+                        <option value="5th">5th</option>
+                        <option value="6th">6th</option>
+                        <option value="7th">7th</option>
+                        <option value="8th">8th</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="branch">Branch</label>
+                    <select name="branch" id="branch">
+                        <option selected disabled>Select Branch...</option>
+                        <option th:each="branch:${branches}" th:value="${branch}" th:text="${branch}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="course">Subject</label>
+                    <select name="course" id="course">
+                        <option selected disabled>Select Subject...</option>
+                        <option th:each="subject:${subjects}" th:value="${subject}" th:text="${subject}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date">Start Date</label>
+                    <input type="date" name="startDate" id="date">
+                </div>
+                <div class="form-group">
+                    <label for="date">End Date</label>
+                    <input type="date" name="endDate" id="date">
+                </div>
+                <div class="form-group">
+                    <button id="courseDetailButton" type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
