@@ -1,5 +1,6 @@
 package com.sams.attendancesystem.controllers;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +34,7 @@ public class BranchController {
 
     // Display All branches
     @GetMapping(path = "/all")
-    public Iterable<Branch> getAllBranch(){
+    public List<Branch> getAllBranch(){
         return branchRepository.findAll();
     }
 

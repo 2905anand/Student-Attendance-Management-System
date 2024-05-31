@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher</title>
+    <link rel="icon" type="image/x-icon" href="assets/STCET-Logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/reportStyle.css">
+</head>
+<body>
+    <div class="nav">
+        <img class="logo-img"  src="/assets/logo.png" alt="Logo Image">
+        <h1 class="logo-txt">ABC Thomas' College of Engineering & Technology</h1>
+    </div>
+    <div class="navbar">
+            <a href="/home">Dashboard</a>
+            <a href="/home">Attendance</a>
+            <a href="">Reports</a>
+            <a href="/home/change_password">Change Password</a>
+            <a id="logout" href="/logout">Logout<i class="fa fa-sign-out"></i></a>
+    </div>
+
+    <!-- End of Navbar -->
+
+    <div class="report-detail">
+        <div class="heading">
+            <h1>Assign Subjects To Teacher</h1>
+        </div>
+
+        <div class="form">
+            <p id="userMsg"></p>
+            <form method="post" action="/teacher/assignTeacherToSubject">
+                <div class="form-group">
+                    <label for="teacherId">Teacher</label>
+                    <input type="text" list="teacherList" name="teachers" id=""teachers />
+                    <datalist id="teacherList">
+                        <option selected disabled>Select Teacher...</option>
+                        <option th:each="teacher:${teacherList}" th:value="${teacher.teacherId}" th:text="${teacher.teacher_email}"></option>
+                    </datalist>
+                </div>
+                <div class="form-group">
+                    <label for="subjectName">Subject</label>
+                    <input type="text" list="subjectList" name="subjects" id="subjects" />
+                    <datalist id="subjectList">
+                        <option selected disabled>Select Subject...</option>
+                        <option th:each="subject:${subjectList}" th:value="${subject.subjectCode}" th:text="${subject.subjectName}"></option>
+                    </datalist>
+                </div> 
+                <div class="form-group">
+                    <button id="addTeacherButton" type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <script>
+        const btn = document.querySelector("#addTeacherButton");
+        const msg = document.querySelector("#userMsg");
+        btn.addEventListener("click", ()=>{
+            msg.innerText = "Teacher Assigned";
+        })
+    </script>
+</body>
+</html>

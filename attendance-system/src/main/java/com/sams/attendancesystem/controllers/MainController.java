@@ -29,6 +29,9 @@ import com.sams.attendancesystem.models.Subject;
 import com.sams.attendancesystem.models.Teacher;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 public class MainController {
@@ -243,5 +246,7 @@ public class MainController {
 
         return mav;
     }
+
+    
 
 }

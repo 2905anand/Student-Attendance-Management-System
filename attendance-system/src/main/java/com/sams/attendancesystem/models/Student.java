@@ -10,8 +10,6 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-// import jakarta.persistence.GeneratedValue;
-// import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -25,7 +23,6 @@ public class Student {
 
     @Id
     @Column
-    // @GeneratedValue(strategy = GenerationType.AUTO)
     public String studentId;
 
     @Column
@@ -45,15 +42,8 @@ public class Student {
     @JsonBackReference
     private Branch branch;
 
-
     @Column
     private Integer semester;
-
-    // @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    // @JoinTable(name = "TEACHER_SUBJECT_MAPPING", joinColumns = @JoinColumn(name = "teacherId"),
-    // inverseJoinColumns = @JoinColumn(name = "subjectCode"))
-    // @JsonManagedReference
-    // private Set<Subject> subjects;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(name = "STUDENT_SUBJECT_MAPPING", joinColumns = @JoinColumn(name = "studentId"),

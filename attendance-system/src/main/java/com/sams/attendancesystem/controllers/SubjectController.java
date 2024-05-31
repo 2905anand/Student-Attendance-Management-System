@@ -88,7 +88,7 @@ public class SubjectController {
     }
     // To Retrieve All Subjects
     @GetMapping(path = "/all")
-    public Iterable<Subject> getAllUsers(){
+    public List<Subject> getAll(){
         return subjectRepository.findAll();
 
     }

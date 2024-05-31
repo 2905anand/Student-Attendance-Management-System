@@ -29,15 +29,10 @@ public class Subject {
     
     @Id
     @Column
-    // @GeneratedValue(strategy = GenerationType.AUTO)
-    private String subjectCode;
-
-
-    // @Column
-    // private String subjectCode;
+    public String subjectCode;
 
     @Column
-    private String subjectName;
+    public String subjectName;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
     @JoinTable(name = "TEACHER_SUBJECT_MAPPING", joinColumns = @JoinColumn(name = "subjectCode"),

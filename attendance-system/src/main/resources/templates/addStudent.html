@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher</title>
+    <link rel="icon" type="image/x-icon" href="assets/STCET-Logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/reportStyle.css">
+</head>
+<body>
+    <div class="nav">
+        <img class="logo-img"  src="/assets/logo.png" alt="Logo Image">
+        <h1 class="logo-txt">ABC College of Engineering & Technology</h1>
+    </div>
+    <div class="navbar">
+            <a href="/home">Dashboard</a>
+            <a href="/home">Attendance</a>
+            <a href="">Reports</a>
+            <a href="/home/change_password">Change Password</a>
+            <a id="logout" href="/logout">Logout<i class="fa fa-sign-out"></i></a>
+    </div>
+
+    <!-- End of Navbar -->
+
+    <div class="report-detail">
+        <div class="heading">
+            <h1>Add Student</h1>
+        </div>
+
+        <div class="form">
+            <form method="post" action="/student/add">
+                <div class="form-group">
+                    <label for="studentId">ID</label>
+                    <input id="studentId" type="text" name="studentId" />
+                </div>
+                <div class="form-group">
+                    <label for="studentRollNo">Roll No.</label>
+                    <input id="studentRollNo" type="number" name="studentRollNo" />
+                </div> 
+                <div class="form-group">
+                    <label for="studentName">Name</label>
+                    <input id="studentName" type="text" name="studentName" />
+                </div> 
+                <div class="form-group">
+                    <label for="batch">Batch</label>
+                    <select id="batch" name="batch">
+                        <option selected disabled>Select Batch...</option>
+                        <option th:each="batch:${batches}" th:value="${batch}" th:text="${batch}"></option>
+                    </select>
+                </div> 
+                <div class="form-group">
+                    <label for="branchId">Branch</label>
+                    <select id="branchId" name="branchId">
+                        <option selected disabled>Select Branch...</option>
+                        <option th:each="branch:${branches}" th:value="${branch.branchId}" th:text="${branch.branchName}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="semester">Semester</label>
+                    <select id="semester" name="semester">
+                        <option selected disabled>Select Semester...</option>
+                        <option value="1">1st</option>
+                        <option value="3">3rd</option>
+                    </select>
+                </div> 
+                <div class="form-group">
+                    <button id="addStudentButton" type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</body>
+</html>

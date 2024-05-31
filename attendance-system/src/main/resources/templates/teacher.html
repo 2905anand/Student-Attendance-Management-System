@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher</title>
+    <link rel="icon" type="image/x-icon" href="assets/STCET-Logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/reportStyle.css">
+</head>
+<body>
+    <div class="nav">
+        <img class="logo-img"  src="/assets/logo.png" alt="Logo Image">
+        <h1 class="logo-txt">ABC College of Engineering & Technology</h1>
+    </div>
+    <div class="navbar">
+            <a href="/home">Dashboard</a>
+            <a href="/home">Attendance</a>
+            <a href="">Reports</a>
+            <a href="/home/change_password">Change Password</a>
+            <a id="logout" href="/logout">Logout<i class="fa fa-sign-out"></i></a>
+    </div>
+
+    <!-- End of Navbar -->
+
+    <div class="report-detail">
+        <div class="heading">
+            <h1>Add Teacher</h1>
+        </div>
+
+        <div class="form">
+            <form method="post" action="/teacher/add">
+                <div class="form-group">
+                    <label for="teacherId">ID</label>
+                    <input id="teacherid" type="text" name="teacherId" />
+                </div>
+                <div class="form-group">
+                    <label for="teacherName">Name</label>
+                    <input id="teachername" type="text" name="teacherName" />
+                </div> 
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="teacherpassword" type="text" name="password" />
+                </div> 
+                <div class="form-group">
+                    <label for="teacher_email">Email</label>
+                    <input id="teacheremail" type="text" name="teacher_email" />
+                </div> 
+                <div class="form-group">
+                    <label for="teacher_role">Role</label>
+                    <select id="teacherrole" name="teacher_role">
+                        <option selected disabled>Select Role...</option>
+                        <option>ROLE_USER</option>
+                        <option>ROLE_ADMIN</option>
+                    </select>
+                </div> 
+                <div class="form-group">
+                    <button id="addTeacherButton" type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</body>
+</html>

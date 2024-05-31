@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher</title>
+    <link rel="icon" type="image/x-icon" href="assets/STCET-Logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/reportStyle.css">
+</head>
+<body>
+    <div class="nav">
+        <img class="logo-img"  src="/assets/logo.png" alt="Logo Image">
+        <h1 class="logo-txt">ABC College of Engineering & Technology</h1>
+    </div>
+    <div class="navbar">
+            <a href="/home">Dashboard</a>
+            <a href="/home">Attendance</a>
+            <a href="">Reports</a>
+            <a href="/home/change_password">Change Password</a>
+            <a id="logout" href="/logout">Logout<i class="fa fa-sign-out"></i></a>
+    </div>
+
+    <!-- End of Navbar -->
+
+    <div class="report-detail">
+        <div class="heading">
+            <h1>Assign Subjects To Student</h1>
+        </div>
+
+        <div class="form">
+            <p id="userMsg"></p>
+            <form method="post" action="/student/assignStudentToSubject">
+                <div class="form-group">
+                    <label for="studentId">Student</label>
+                    <input type="text" list="studentList" name="students" id=""students />
+                    <datalist id="studentList">
+                        <option selected disabled>Select Student...</option>
+                        <option th:each="student:${studentList}" th:value="${student.studentId}" th:text="${student.studentName}"></option>
+                    </datalist>
+                </div>
+                <div class="form-group">
+                    <label for="subjectName">Subject</label><br>
+                    <input type="checkbox" name="subjects" id="subjects" th:each="subject:${subjectList}" th:value="${subject.subjectCode}" th:text="${subject.subjectName}">
+                </div> 
+                <div class="form-group">
+                    <button id="assignSubjectStudent" type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <script>
+        const btn = document.querySelector("#addTeacherButton");
+        const msg = document.querySelector("#userMsg");
+        btn.addEventListener("click", ()=>{
+            msg.innerText = "Teacher Assigned";
+        })
+    </script>
+</body>
+</html>

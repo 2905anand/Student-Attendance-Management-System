@@ -16,10 +16,10 @@ public class Branch {
     
     @Id
     @Column
-    private String branchId;
+    public String branchId;
 
     @Column
-    private String branchName;
+    public String branchName;
 
     @OneToMany(mappedBy = "branch")
     @JsonManagedReference

@@ -58,7 +58,7 @@ public class AttendanceController {
         List<Student> studentList = studentController.getStudentListForAttendance(subjectId,branchId,semesterValue);
 
         Date ddate = Date.valueOf(date);
-
+        // studentList.sort
         for(Student student:studentList){
             Attendance attendance = new Attendance();
             attendance.setStudentId(student.getstudentId());

@@ -5,22 +5,27 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 // import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 // import org.springframework.web.bind.annotation.RequestParam;
 // import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.sams.attendancesystem.Repository.SubjectRepository;
 import com.sams.attendancesystem.Repository.TeacherRepository;
 import com.sams.attendancesystem.models.Subject;
 import com.sams.attendancesystem.models.Teacher;
+import com.sams.attendancesystem.util.PasswordEncodeDecode;
 
 @RestController // This means that this class is a Controller
 @RequestMapping(path="/teacher",method = {RequestMethod.DELETE, RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT}) // This means URL's start with /demo (after Application path)
@@ -31,12 +36,28 @@ public class TeacherController {
 
   @Autowired SubjectRepository subjectRepository;
 
-  @PostMapping(path="/add") // Map ONLY POST Requests
-  public String addNewTeacher (@RequestBody Teacher entity) {
+  @PostMapping(path="/add") 
+  public ModelAndView addNewTeacher (@ModelAttribute Teacher entity) {
     
-    Teacher teacher = new Teacher(entity.getteacherId(),entity.getteacherName());
-    teacherRepository.save(teacher);
-    return "Teacher Saved!!!";
+    ModelAndView mav = new ModelAndView();
+    try{
+      Teacher teacher = new Teacher(entity.getteacherId(),entity.getteacherName());
+      String encodedPassword = PasswordEncodeDecode.passwordEncoder(entity.getPassword());
+      teacher.setPassword(encodedPassword);
+      teacher.setTeacher_email(entity.getTeacher_email());
+      teacher.setTeacher_role(entity.getTeacher_role());
+      teacherRepository.save(teacher);
+      mav.setViewName("successOperation");
+      String message ="Teacher with Id "+teacher.getteacherId()+" and name "+teacher.getteacherName()+" added successfully!";
+      mav.addObject("message",message);
+    }
+    catch(Exception ex){
+      mav.setViewName("failOperation");
+      mav.addObject("message", "Something Went Wrong!!");
+      ex.printStackTrace();
+    }
+    return mav;
+    
   }
 
   @PostMapping(value = "/createTeacherForSubject/{subjectCode}")
@@ -61,14 +82,17 @@ public class TeacherController {
     return "Teacher Saved!!!";
   }
 
-  @PostMapping(path = "/assignTeacherToSubject/{teacherId}/{subjectCode}")
-    public String assignTeacherToSubject(@PathVariable(name="teacherId") String teacherId, @PathVariable(name = "subjectCode") String subjectCode){
+  @PostMapping(path = "/assignTeacherToSubject")
+    public ModelAndView assignTeacherToSubject(@RequestParam(name="teachers") String teacherId, @RequestParam(name = "subjects") String subjectCode){
       // System.out.println("\n Create a new teacher and assign to an existing subject\n");
 
       // Teacher teacher = new Teacher(entity.getteacherId(),entity.getteacherName());
 
       // teacher = this.teacherRepository.save(teacher);
       // System.out.println("\nSaved Teacher :"+teacher+"\n");
+      ModelAndView mav=new ModelAndView();
+
+      try{
 
       Teacher teacher = this.teacherRepository.getReferenceById(teacherId);
 
@@ -87,8 +111,18 @@ public class TeacherController {
       subject = subjectRepository.save(subject);
 
       System.out.println("Teacher assigned to subject\n");
+      mav.setViewName("successOperation");
+      String message ="Subject "+subjectCode+" assigned to"+teacher.teacherName + " successfully!";
+      mav.addObject("message",message);
 
-      return "Teacher Assigned!!!";
+      }catch(Exception e){
+        mav.setViewName("failOperation");
+        mav.addObject("message","Something went wrong!");
+        e.printStackTrace();
+      }
+
+      // return "Teacher Assigned!!!";
+      return mav;
 
     }
 
